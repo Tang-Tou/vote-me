@@ -1,0 +1,33 @@
+<!-- <h1>候選人列表</h1> -->
+<%= flash[:notice]%>
+
+<%= link_to "新增候選人", new_candidate_path %>
+</br>
+<table>
+  <tr>
+    <td>票數</td>
+    <td>姓名</td>
+    <td>黨派</td>
+    <td>年紀</td>
+    <td>Action</td>
+  </tr>
+
+
+  <% @candidates.each do |candidate| %>
+  <tr>
+    <td><%= link_to 'vote', vote_candidate_path(candidate.id), method: 'post' %></td>
+    <td><%= candidate.votes %></td>
+                                                <!-- 傳id給他(帶參數) -->
+    <td><%= link_to candidate.name, candidate_path(candidate.id) %></td>
+    <td><%= candidate.party %></td>
+    <td><%= candidate.age %></td>
+    <td>
+      <%= link_to 'update', edit_candidate_path(candidate.id) %>
+      <%= link_to 'delete', candidate_path(candidate.id), method: 'delete', data: {confirm: '確定刪除?'} %>
+      
+    </td>
+  </tr>
+  <% end %>
+<!-- 將資料透過迴圈一筆一筆送進來 -->
+  
+</table>
