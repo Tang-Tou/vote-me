@@ -59,9 +59,17 @@ class CandidatesController < ApplicationController
 
   def vote
     @candidate = Candidate.find_by(id: params[:id])
+
+    # 第一個是從投票紀錄計算
+    # VoteLog.create(candidate, ip_address:request.remote_ip)
+    # 第二個是從候選人的得票紀錄計算
+    @candidate.vote_logs.create(ip_address:request.remote_ip)
+
+
+    # 以下寫法可以無限制的投票，不好
     # @candidate.votes = @candidate.votes + 1 等同下方的rails寫法
-    @candidate.increment(:votes)
-    @candidate.save
+    # @candidate.increment(:votes)
+    # @candidate.save
 
     flash[:notice] = "投票成功"
     redirect_to candidates_path
